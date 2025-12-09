@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Message Preview — AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --card-radius:14px;
+    --shadow:0 6px 22px rgba(12,20,30,0.08);
+    --gap:16px;
+  }
+  body{font-family:Inter,system-ui,Arial,sans-serif;background:#f2f5f8;margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;color:#0b2545}
+  .wrap{width:100%;max-width:920px;display:grid;grid-template-columns:1fr;gap:20px}
+  /* base card */
+  .card{background:white;border-radius:var(--card-radius);box-shadow:var(--shadow);padding:22px;box-sizing:border-box}
+  .row{display:flex;gap:12px;align-items:center}
+  .title{font-size:18px;font-weight:700;margin:0}
+  .sub{color:#516074;font-size:14px;margin:8px 0}
+  .cta{display:inline-block;padding:12px 16px;border-radius:10px;background:#007bff;color:white;text-decoration:none;font-weight:700;box-shadow:0 3px 10px rgba(0,123,255,0.16)}
+  .cta:active{transform:translateY(1px)}
+  .small{font-size:13px;color:#5f6b75}
+  .muted{color:#7e8b93}
+
+  /* specific styles per theme (will be applied to .card via extra classes) */
+  /* URGENCY */
+  .urgency{border-left:6px solid #ff7a3d;padding-left:18px}
+  .urgency .badge{background:#fff4eb;color:#b04a07;padding:6px 10px;border-radius:999px;font-weight:700;display:inline-block}
+  .urgency .countdown{font-weight:700;color:#b03a07;margin-left:10px}
+
+  /* FAMILIARITY (chat) */
+  .chat{background:linear-gradient(180deg,#f7fbff,#ffffff);border-radius:18px;padding:20px}
+  .chat .bubble{background:#e9f2ff;padding:12px 14px;border-radius:14px;display:inline-block;max-width:92%}
+  .chat .bubble.me{background:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 6px rgba(10,18,36,0.04)}
+
+  /* AUTHORITY */
+  .authority{border:1px solid #e6eef6;padding:28px}
+  .authority .office{font-weight:700;color:#163a4a;letter-spacing:0.6px}
+  .authority .docbox{background:#fbfcfe;border-radius:8px;padding:14px;border:1px dashed #e1e9f2}
+
+  /* FEAR (security) */
+  .fear{background:linear-gradient(180deg,#081730,#0b2a4b);color:white;padding:20px;border-radius:12px}
+  .fear .warning{background:rgba(255,255,255,0.06);padding:10px;border-radius:8px;margin-bottom:12px}
+
+  /* CURIOSITY */
+  .curiosity{background:linear-gradient(135deg,#7a5cff,#b07cff);color:white;padding:28px;border-radius:18px;text-align:center}
+  .curiosity .spark{font-weight:700;font-size:20px;margin-bottom:10px}
+
+  /* utilities */
+  .hr{height:1px;background:#eef3f6;margin:12px 0;border-radius:2px}
+  .meta{font-size:13px;color:#6f7b83}
+  .countdown-elem{font-weight:700;color:#d63333}
+  @media (min-width:880px){ .wrap{grid-template-columns:1fr} }
+</style>
+
+<!-- GA4 snippet: REPLACE G-XXXXXXX with your Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXX', { 'send_page_view': true });
+</script>
+
+</head>
+<body>
+  <div class="wrap" id="wrap">
+
+    <!-- placeholder: message card will be injected here -->
+  </div>
+
+<script>
+/* ============================
+   MESSAGE POOL (AI) — 5 items
+   - id: unique message id
+   - type: theme
+   - title: short
+   - body: main content (can include line breaks)
+   - link: placeholder (YouTube)
+   ============================ */
+const messages = [
+  {
+    id: "AI_URGENCY_01",
+    type: "urgency",
+    title: "Reward Verification Required",
+    body: `Your profile has been flagged for immediate reward processing. You have been identified for a 500 Robux reward, but the reward and account confirmation must be completed within 24 hours.
+
+To avoid losing your reward, complete verification now via the button below.`,
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    id: "AI_FAM_02",
+    type: "familiarity",
+    title: "Help — Locked Out",
+    body: `Hey! 😩
+
+I’m locked out of my Facebook account and can’t access it. Can you go to the link below and file a report saying my account is locked and password resets aren’t working? I’d really appreciate it — you’re a lifesaver! 🙏`,
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    id: "AI_AUTH_03",
+    type: "authority",
+    title: "Registrar Request: Documents Needed",
+    body: `Dear Student,
+
+As part of the ongoing review of your college application, please upload official academic records via the secure link below to complete your file. Contact the Registrar’s Office if you need assistance.`,
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    id: "AI_FEAR_04",
+    type: "fear",
+    title: "Account Under Review — Immediate Action Required",
+    body: `Important Notice: A violation of our updated Terms & Conditions has been detected. Your account will be permanently removed within 24 hours unless you verify your identity.
+
+Verify now to prevent deletion of your account's data.`,
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    id: "AI_CURIO_05",
+    type: "curiosity",
+    title: "You've Been Selected — Quick Preview",
+    body: `Hi! You’ve been selected to try an experimental preview. It’s quick and safe, and needs no personal details. Click below to view the preview and help us improve the project.`,
+    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  }
+];
+
+/* ============================
+   Selection logic: each message has 10% independent chance.
+   If multiple pass, choose one at random. If none pass, pick one at random fallback.
+   ============================ */
+function selectMessage() {
+  const candidates = [];
+  messages.forEach(msg => {
+    if (Math.random() < 0.10) candidates.push(msg);
+  });
+  if (candidates.length === 0) {
+    // fallback to ensure exactly one is shown per session
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+  // if multiple, pick one randomly among candidates
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
+
+/* ============================
+   Renderers for each theme
+   Return HTML string to inject.
+   ============================ */
+
+function renderUrgency(m){
+  const timeLimit = 24*60*60; // seconds example (display only)
+  // static countdown display (not tied to actual time) — realistic UI
+  return `
+    <div class="card urgency" role="article" aria-labelledby="t_${m.id}">
+      <div class="row">
+        <div>
+          <div class="badge">URGENT</div>
+        </div>
+        <div style="flex:1">
+          <h3 id="t_${m.id}" class="title">${m.title}</h3>
+          <div class="sub">${escapeHtml(m.body)}</div>
+          <div style="margin-top:8px">
+            <a id="cta_${m.id}" class="cta" target="_blank" rel="noopener">Verify Now</a>
+            <span class="small" style="margin-left:12px">Deadline: <span class="countdown-elem">24h</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderFamiliarity(m){
+  return `
+    <div class="card chat" role="article" aria-labelledby="t_${m.id}">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:56px;height:56px;border-radius:10px;background:#e1f0ff;display:flex;align-items:center;justify-content:center;font-weight:700;color:#0b66d1">FR</div>
+        <div style="flex:1">
+          <h3 id="t_${m.id}" class="title">${m.title}</h3>
+          <div class="bubble">${escapeHtml(m.body)}</div>
+          <div style="margin-top:12px">
+            <a id="cta_${m.id}" class="cta" target="_blank" rel="noopener">Submit Report</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAuthority(m){
+  return `
+    <div class="card authority" role="article" aria-labelledby="t_${m.id}">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="office">Registrar's Office</div>
+          <h3 id="t_${m.id}" class="title">${m.title}</h3>
+        </div>
+      </div>
+      <div class="hr"></div>
+      <div class="docbox">${escapeHtml(m.body)}</div>
+      <div style="margin-top:14px">
+        <a id="cta_${m.id}" class="cta" target="_blank" rel="noopener">Upload Documents</a>
+      </div>
+    </div>
+  `;
+}
+
+function renderFear(m){
+  return `
+    <div class="card fear" role="article" aria-labelledby="t_${m.id}">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="font-size:28px;line-height:1;color:#ffdfdf">⚠️</div>
+        <div style="flex:1">
+          <h3 id="t_${m.id}" class="title" style="color:white">${m.title}</h3>
+          <div class="warning">${escapeHtml(m.body)}</div>
+          <div style="margin-top:12px">
+            <a id="cta_${m.id}" class="cta" style="background:#ff4545" target="_blank" rel="noopener">Verify Account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCuriosity(m){
+  return `
+    <div class="card curiosity" role="article" aria-labelledby="t_${m.id}">
+      <div class="spark">You’re selected!</div>
+      <h3 id="t_${m.id}" class="title" style="color:white">${m.title}</h3>
+      <p style="color:rgba(255,255,255,0.95)">${escapeHtml(m.body)}</p>
+      <div style="margin-top:16px">
+        <a id="cta_${m.id}" class="cta" style="background:rgba(255,255,255,0.12);color:white" target="_blank" rel="noopener">View Preview</a>
+      </div>
+    </div>
+  `;
+}
+
+/* helper: escape html for safety when injecting */
+function escapeHtml(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>");
+}
+
+/* ============================
+   main: select, render, attach events
+   ============================ */
+const chosen = selectMessage();
+
+/* render by type */
+let html = "";
+switch(chosen.type){
+  case "urgency": html = renderUrgency(chosen); break;
+  case "familiarity": html = renderFamiliarity(chosen); break;
+  case "authority": html = renderAuthority(chosen); break;
+  case "fear": html = renderFear(chosen); break;
+  case "curiosity": html = renderCuriosity(chosen); break;
+  default: html = `<div class="card"><h3 class="title">${escapeHtml(chosen.title)}</h3><p>${escapeHtml(chosen.body)}</p><a id="cta_${chosen.id}" class="cta" target="_blank">Open</a></div>`;
+}
+
+/* inject */
+document.getElementById("wrap").innerHTML = html;
+
+/* Analytics: impression event */
+if (typeof gtag === "function") {
+  gtag('event','message_impression',{ message_id: chosen.id, message_type: chosen.type });
+}
+
+/* Attach CTA behavior (open placeholder link in new tab + analytics) */
+const cta = document.getElementById(`cta_${chosen.id}`);
+if (cta){
+  cta.addEventListener('click', (e) => {
+    // log click event
+    if (typeof gtag === "function") {
+      gtag('event','message_clicked',{ message_id: chosen.id, message_type: chosen.type });
+    }
+    // open placeholder in new tab
+    window.open(chosen.link, '_blank', 'noopener');
+  });
+}
+
+/* Optional: send heartbeat/time_on_page as user stays (useful for average time) */
+let secondsOnPage = 0;
+const hb = setInterval(() => {
+  secondsOnPage++;
+  if (secondsOnPage % 10 === 0) {
+    if (typeof gtag === "function") {
+      gtag('event','heartbeat',{ message_id: chosen.id, secs: secondsOnPage });
+    }
+  }
+}, 1000);
+
+/* clean up on unload */
+window.addEventListener('pagehide', () => {
+  if (typeof gtag === "function") {
+    gtag('event','time_on_page',{ message_id: chosen.id, secs: secondsOnPage });
+  }
+  clearInterval(hb);
+});
+</script>
+
+</body>
+</html>
