@@ -264,7 +264,7 @@ document.getElementById("wrap").innerHTML = html;
 
 /* Analytics: impression event */
 if (typeof gtag === "function") {
-  gtag('event','message_impression',{ message_id: chosen.id, message_type: chosen.type });
+  gtag('event','ai_message_impression',{ message_id: chosen.id, message_type: chosen.type });
 }
 
 /* Attach CTA behavior (open placeholder link in new tab + analytics) */
@@ -302,6 +302,7 @@ window.addEventListener('pagehide', () => {
 
 </body>
 </html>
+
 
 
 
