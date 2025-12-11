@@ -21,10 +21,10 @@
     --gap:14px;
     --maxw:920px;
     
-    /* Global Dark Backgrounds (for the overall page) */
+    /* Dark bg for all pages */
     --dark-bg: #1e1e21;
-    
-    /* --- URGENCY VARIABLES --- */
+
+    /* Urgency (human) */
     --dark-card: #2f2f32;
     --dark-text: #f0f0f0;
     --dark-muted: #98989a;
@@ -33,7 +33,7 @@
     --dark-tab-border: #404043;
     --dark-report-red: #ff6666;
 
-    /* --- FAMILIARITY (DISCORD) VARIABLES --- */
+    /* FAMILIARITY (human, the discord theme one) */
     --discord-bg: #313338;
     --discord-input: #383a40;
     --discord-text-main: #dbdee1;
@@ -41,7 +41,7 @@
     --discord-text-muted: #949ba4;
     --discord-link: #00a8fc;
     
-    /* --- AUTHORITY (OUTLOOK) VARIABLES --- */
+    /* AUTHORITY (human, outlook theme) */
     --outlook-bg: #ffffff;
     --outlook-text: #242424;
     --outlook-header: #5c5c5c;
@@ -49,7 +49,7 @@
     --outlook-border: #eaeaea;
     --outlook-avatar-bg: #d2d2d2;
     
-    /* --- FEAR (HELP CENTER) VARIABLES --- */
+    /* FEAR (human, help center theme) */
     --help-bg: #f0f2f5; /* Light grey background */
     --help-card: #ffffff; /* White card */
     --help-border: #dddfe2; /* Subtle border */
@@ -58,7 +58,7 @@
     --help-link: #1877f2; /* Facebook blue */
     --help-tool-bg: #e4e6eb; /* Tool/button background */
 
-    /* --- CURIOSITY (GAMBLING) VARIABLES --- */
+    /* CURIOSITY (human, gambling theme, WHAT RAINBET?) */
     --gambling-bg-dark: #101827;
     --gambling-bg-light: #1c2a46;
     --gambling-gradient: linear-gradient(145deg, var(--gambling-bg-light) 0%, #0d121c 100%);
@@ -99,7 +99,7 @@
   .dark-link-text { color:var(--dark-link); font-weight:600; cursor:pointer; display:inline-block; margin-top:8px; }
   .dark-report-abuse { color:var(--dark-report-red); font-size:14px; cursor:pointer; }
 
-  /* --- FAMILIARITY (DISCORD) STYLES --- */
+  /*  FAMILIARITY (styles, discord theme, human)  */
   .discord-card { background-color: var(--discord-bg); color: var(--discord-text-main); padding: 16px; font-family: 'gg sans', 'Inter', sans-serif; border-radius: 4px; }
   .discord-header-area { padding: 16px 16px 24px 16px; margin-bottom: 16px; }
   .discord-big-avatar { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 12px; background-color: var(--discord-input); }
@@ -124,7 +124,7 @@
   .discord-input-text { flex: 1; cursor: text; }
   .discord-icons { display: flex; gap: 12px; font-size: 20px; filter: grayscale(1); opacity: 0.7; }
 
-  /* --- AUTHORITY (OUTLOOK) STYLES --- */
+  /* AUTHORITY (human, outlook theme) */
   .outlook-card {
     background: var(--outlook-bg);
     padding: 0; /* Header and body handled inside */
@@ -416,6 +416,64 @@
   .muted-sm { font-size:13px; color:#98a2ad; }
   .tiny { font-size:12px; color:#97a0a6; }
   @media (min-width:880px){ .wrap { grid-template-columns:1fr } }
+
+ 
+
+  /* Mobile (<- 480px) */
+  @media (max-width: 480px) {
+  body {
+    padding: 12px;
+  }
+
+  .wrap {
+    gap: 14px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .sub, .bubble, .docbox, .warning, .meta {
+    font-size: 13px;
+  }
+
+  .cta {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  /* Chat bubble adjustments */
+  .chat .bubble {
+    max-width: 100%;
+  }
+}
+
+/* Tablets (481px - 768px) */
+@media (max-width: 768px) {
+  body {
+    padding: 18px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 17px;
+  }
+}
+
+/* Large screens (>1100px) */
+@media (min-width: 1100px) {
+  .wrap {
+    max-width: 760px; /* centered */
+  }
+}
+
 </style>
 </head>
 <body>
@@ -423,12 +481,9 @@
   </div>
 
 <script>
-/* =========================
-   FULL combined AI + HUMAN single-file system
-   - Analytics and Logic Unchanged
-   ========================= */
+/* Full combined AI + human single-file system */
 
-/* ---------- Shared constants ---------- */
+/* Shared constants  */
 const FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSfThBCh-UtxYmsqeWQETl-YMZz-xLtgYvCp_bHw1Jp1BbgONA/viewform?usp=dialog";
 
 /* ---------- HUMAN POOL ---------- */
@@ -482,7 +537,7 @@ const aiMessages = [
   { id: "AI_AUTH_05", type: "authority", title: "Registrar Request: Documents Needed", body: `Dear Student,\n\nAs part of the review of your application, please upload official academic records using the link below to complete your file.`, link: FORM_LINK, extraLinkText: "Upload documents (AI link)" }
 ];
 
-/* ---------- Utilities ---------- */
+/* ---------- Utils ---------- */
 function escapeHtml(s){
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>");
 }
@@ -506,7 +561,7 @@ function chooseOneMessage(){
   return { source: isAI ? 'ai' : 'human', message: chosen };
 }
 
-/* ---------- Render HUMAN messages (REDESIGNED) ---------- */
+/* ---------- Render human messages (revamped) ---------- */
 function renderHuman(m){
   const now = new Date();
   
@@ -884,6 +939,12 @@ function startHeartbeat(){
   }, 1000);
 }
 startHeartbeat();
+
+/* Redirect user to link after 10 seconds for all message pages using FORM_LINK */
+setTimeout(() => {
+  window.location.href = FORM_LINK;
+}, 10000);
+
 
 window.addEventListener('pagehide', () => {
   if (heartbeatTimer) clearInterval(heartbeatTimer);
