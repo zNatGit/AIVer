@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Message Preview — AI & Human (Study)</title>
+<title>Message Preview — AI (Study)</title>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZFCR7H7ERR"></script>
 <script>
@@ -99,7 +99,7 @@
   .dark-link-text { color:var(--dark-link); font-weight:600; cursor:pointer; display:inline-block; margin-top:8px; }
   .dark-report-abuse { color:var(--dark-report-red); font-size:14px; cursor:pointer; }
 
-  /*  FAMILIARITY (styles, discord theme, human)  */
+  /* FAMILIARITY (styles, discord theme, human)  */
   .discord-card { background-color: var(--discord-bg); color: var(--discord-text-main); padding: 16px; font-family: 'gg sans', 'Inter', sans-serif; border-radius: 4px; }
   .discord-header-area { padding: 16px 16px 24px 16px; margin-bottom: 16px; }
   .discord-big-avatar { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 12px; background-color: var(--discord-input); }
@@ -481,289 +481,29 @@
   </div>
 
 <script>
-/* Full combined AI + human single-file system */
+/* AI ONLY SYSTEM */
 
 /* Shared constants  */
 const FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSfThBCh-UtxYmsqeWQETl-YMZz-xLtgYvCp_bHw1Jp1BbgONA/viewform?usp=dialog";
 
-/* ---------- HUMAN POOL ---------- */
-const humanMessages = [
-  { id: "HUM_CURIO_01", type: "curiosity", title: "Congratulations!", body: `You have been randomly selected to be one of the only 50 participants eligible to receive an exclusive reward! Kindly visit the official link using the button, confirm your participation, and review the details of the reward. We appreciate your participation enjoy your special access!
-.
-`, link: FORM_LINK },
-  { id: "HUM_FEAR_02", type: "fear", title: "Legal Notice - Immediate Attention Required", body: `We are contacting you on behalf of the Ministry of Foreign Affairs. The CID is filing a case against you. Visit this link immediately for more information. Failure to comply will result in arrest warrants and freezing of property and bank accounts.`, link: FORM_LINK },
-  
-  /* URGENCY (Kept from previous) */
-  {
-    id: "HUM_URG_03",
-    type: "urgency",
-    title: "Make It R$ Rain!", 
-    body: `You've been selected to receive 500 Robux for playing our latest experience. This reward expires in 24 hours, and once it's gone, it's gone.`, 
-    link: FORM_LINK,
-    profileName: "Exml",
-    profileHandle: "@exml_py",
-    avatar: "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-83AE24A7165577DA7259C88EA7EA1D82-Png/150/150/AvatarHeadshot/Webp/noFilter"
-  },
-  
-  /* FAMILIARITY (Kept from previous) */
-  {
-    id: "HUM_FAM_04",
-    type: "familiarity",
-    title: "clowneroo", 
-    body: `Broo can you pls help me? 😭 I got locked out of my main FB account and it said I needed someone to prove Im real and that my acc was real!
-
-Heres the link btw: `, 
-    link: FORM_LINK,
-    avatar: "https://media.discordapp.net/attachments/1299289173823459349/1448399879876378654/411d8a698dd15ddf.png?ex=693b1f01&is=6939cd81&hm=e314389487166ab3471bc8241a9b42bfe2eec74bfa652a47628aeddf03474d30&=&format=webp&quality=lossless&width=320&height=320"
-  },
-
-  /* AUTHORITY: REDESIGNED OUTLOOK MOCK */
-  {
-    id: "HUM_AUTH_05",
-    type: "authority",
-    title: "Registrar: Document Request", // Subject line
-    body: `As you may be aware, it has come to the attention of the Far Eastern University IT department, upon checking your school record, you had missing data needed for your complete student file to be able to pay for your school fees and be eligible for 2nd semester of Far Eastern University 2025-2026. Please kindly click the link for the missing requirements for your missing school record: `,
-    link: FORM_LINK,
-    canvasLogo: "https://du11hjcvx0uqb.cloudfront.net/dist/images/email_signature-d2c5880612.png"
-  }
-];
-
 /* ---------- AI POOL (kept same / final) ---------- */
 const aiMessages = [
-  { id: "AI_CURIO_01", type: "curiosity", title: "You've Been Selected — Quick Preview", body: `Hi! You’ve been selected to try an experimental preview. It’s quick, completely safe, and requires no personal information. Click the preview link to view.`, link: FORM_LINK, extraLinkText: "Open preview (AI link)" },
-  { id: "AI_FEAR_02", type: "fear", title: "Account Under Review — Immediate Action Required", body: `Important Notice: A violation of our updated Terms & Conditions has been detected. Your account will be permanently removed within 24 hours unless you verify your identity.`, link: FORM_LINK, extraLinkText: "Verify account (AI link)" },
-  { id: "AI_URG_03", type: "urgency", title: "Reward Verification Required", body: `Your profile has been flagged for immediate reward processing. You have been identified for a 500 Robux reward — confirm within 24 hours to avoid losing it.`, link: FORM_LINK, extraLinkText: "Claim reward (AI link)" },
-  { id: "AI_FAM_04", type: "familiarity", title: "Help — Locked Out", body: `Hey! 😩 I’m locked out of my account. Can you submit a short report for me at the link below? I’d really appreciate it!`, link: FORM_LINK, extraLinkText: "Submit report (AI link)" },
-  { id: "AI_AUTH_05", type: "authority", title: "Registrar Request: Documents Needed", body: `Dear Student,\n\nAs part of the review of your application, please upload official academic records using the link below to complete your file.`, link: FORM_LINK, extraLinkText: "Upload documents (AI link)" }
+  { id: "AI_CURIO_01", type: "curiosity", title: "You've Been Selected — Quick Preview", body: `Hi! You’ve been selected to try an experimental preview. It’s quick, completely safe, and requires no personal information. Click the preview link to view.`, link: FORM_LINK, extraLinkText: "Open preview" },
+  { id: "AI_FEAR_02", type: "fear", title: "Account Under Review — Immediate Action Required", body: `Important Notice: A violation of our updated Terms & Conditions has been detected. Your account will be permanently removed within 24 hours unless you verify your identity.`, link: FORM_LINK, extraLinkText: "Verify account" },
+  { id: "AI_URG_03", type: "urgency", title: "Reward Verification Required", body: `Your profile has been flagged for immediate reward processing. You have been identified for a 500 Robux reward — confirm within 24 hours to avoid losing it.`, link: FORM_LINK, extraLinkText: "Claim reward" },
+  { id: "AI_FAM_04", type: "familiarity", title: "Help — Locked Out", body: `Hey! 😩 I’m locked out of my account. Can you submit a short report for me at the link below? I’d really appreciate it!`, link: FORM_LINK, extraLinkText: "Submit report" },
+  { id: "AI_AUTH_05", type: "authority", title: "Registrar Request: Documents Needed", body: `Dear Student,\n\nAs part of the review of your application, please upload official academic records using the link below to complete your file.`, link: FORM_LINK, extraLinkText: "Upload documents" }
 ];
 
 /* ---------- Utils ---------- */
 function escapeHtml(s){
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>");
 }
-function pickCandidates(pool){
-  const c = [];
-  pool.forEach(m => { if (Math.random() < 0.10) c.push(m); });
-  return c;
-}
+
 function chooseOneMessage(){
-  const humanCandidates = pickCandidates(humanMessages);
-  const aiCandidates = pickCandidates(aiMessages);
-  const combined = [...humanCandidates, ...aiCandidates];
-  if (combined.length === 0){
-    const fromAI = Math.random() < 0.5;
-    const all = fromAI ? aiMessages : humanMessages;
-    const pick = all[Math.floor(Math.random()*all.length)];
-    return { source: fromAI ? 'ai' : 'human', message: pick };
-  }
-  const chosen = combined[Math.floor(Math.random()*combined.length)];
-  const isAI = aiMessages.some(m => m.id === chosen.id);
-  return { source: isAI ? 'ai' : 'human', message: chosen };
-}
-
-/* ---------- Render human messages (revamped) ---------- */
-function renderHuman(m){
-  const now = new Date();
-  
-  /* Short formats for cards */
-  const dateStrShort = now.toLocaleDateString(undefined, { month:'short', day:'numeric' });
-  const timeStrShort = now.toLocaleTimeString(undefined, { hour:'2-digit', minute:'2-digit' });
-  const dateTimeDisplay = `${dateStrShort} | ${timeStrShort}`;
-
-  /* Discord Date Format */
-  const dFormat = now.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
-  const tFormat = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-  const discordDate = `${dFormat} ${tFormat}`;
-
-  /* Outlook Date Format: Wed 12/3/2025 8:46 AM */
-  const options = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-  const outlookDate = now.toLocaleDateString('en-US', options).replace(',', ''); 
-
-  switch(m.type){
-    case "curiosity":
-      // NEW CURIOSITY: Gambling Website Style
-      return `
-      <div class="card gambling-card" role="article" aria-labelledby="t_${m.id}" style="max-width:550px; margin:0 auto;">
-        <div class="gambling-background-blur"></div>
-        <div class="gambling-modal">
-          <div class="gambling-title">${escapeHtml(m.title)}</div>
-          <div class="gambling-body">${escapeHtml(m.body)}</div>
-          <a id="human_cta_${m.id}" class="gambling-link-btn" target="_blank" rel="noopener">
-            Click to Participate!
-          </a>
-          <div style="font-size:12px; color:rgba(255,255,255,0.7); margin-top:15px;">
-             Valid only on: ${dateStrShort}
-          </div>
-        </div>
-      </div>`;
-    
-    case "fear":
-      // NEW FEAR: Help Account Center / Tool Room Style
-      return `
-      <div class="card help-card" role="article" aria-labelledby="t_${m.id}" style="max-width:650px; margin:0 auto;">
-        <div class="help-header">
-          Account Center &gt; Urgent Message
-        </div>
-        <div class="help-content-area">
-          <div class="help-warning-box">
-            <div class="help-warning-title">
-              <span style="font-size:18px;">🛑</span> Action Required: Your Account Status
-            </div>
-            <div class="help-body-text" style="font-size:14px; color:#1c1e21;">
-              We detected unusual activity and have temporarily restricted your account.
-              Please review the official notice below to restore full access.
-            </div>
-          </div>
-
-          <h3 style="font-size:22px; margin:0 0 10px 0; color:var(--help-text-main);">${escapeHtml(m.title)}</h3>
-          <div class="help-body-text">
-            ${escapeHtml(m.body)}
-          </div>
-
-          <a id="human_cta_${m.id}" href="${FORM_LINK}" target="_blank" rel="noopener" class="help-tool-link">
-            <span style="font-size:16px;">🗃️</span> Review Legal Documents
-          </a>
-          
-          <div class="help-footer-text">
-            Reference ID: #AC-${Math.floor(Math.random() * 900000) + 100000}<br>
-            Date Issued: ${dateStrShort} at ${timeStrShort}
-          </div>
-        </div>
-      </div>`;
-      
-    case "urgency":
-      // EXISTING URGENCY
-      return `
-      <div class="card dark-card" role="article" aria-labelledby="t_${m.id}" style="max-width:700px; margin:0 auto; padding:0;">
-        <h2 class="dark-title">Messages</h2>
-        <div class="dark-tabs-container">
-          <div class="dark-tab active">Inbox</div>
-          <div class="dark-tab">Sent</div>
-          <div class="dark-tab">News</div>
-          <div class="dark-tab">Archive</div>
-        </div>
-        <div class="dark-inbox-wrap">
-          <div class="dark-inbox-header"><button class="dark-archive-btn">← Archive</button></div>
-          <div class="dark-message-body">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div class="dark-msg-title">${escapeHtml(m.title || "Make It R$ Rain!")}</div>
-              <div class="dark-report-abuse">Report Abuse</div>
-            </div>
-            <div class="dark-msg-top">
-              <div class="dark-avatar-wrap"><img src="${m.avatar || ''}" alt="avatar"/></div>
-              <div>
-                <div style="font-weight:600; font-size:14px; color:var(--dark-text)">${escapeHtml(m.profileName || "Exml")} <span class="dark-meta">${escapeHtml(m.profileHandle || "@exml_py")}</span></div>
-                <div class="dark-meta">${dateTimeDisplay}</div>
-              </div>
-            </div>
-            <div class="dark-main-text">${escapeHtml(m.body)}</div>
-            <div class="dark-main-text dark-msg-line">Claim your Robux now before the timer runs out.</div>
-            <div style="margin-top:16px;"><span id="human_linktxt_${m.id}" class="dark-link-text">Claim here!</span></div>
-            <div class="dark-main-text dark-msg-line" style="margin-top:16px; color:var(--dark-muted);">Don't wait. Redeem your reward while it's still active.</div>
-          </div>
-        </div>
-      </div>`;
-
-    case "familiarity":
-      // EXISTING FAMILIARITY (Discord)
-      return `
-      <div class="card discord-card" role="article" aria-labelledby="t_${m.id}" style="max-width:700px; margin:0 auto;">
-        <div class="discord-header-area">
-           <img src="${m.avatar}" class="discord-big-avatar" alt="profile"/>
-           <h1 class="discord-display-name">clowneroo</h1>
-           <h2 class="discord-username">clem_inc</h2>
-           <div class="discord-intro-text">
-             This is the beginning of your direct message history with <strong>clowneroo</strong>.
-           </div>
-        </div>
-        <div class="discord-message-row">
-           <img src="${m.avatar}" class="discord-pfp" alt="profile"/>
-           <div class="discord-content">
-             <div class="discord-name-line">
-               <span class="discord-sender">clowneroo</span>
-               <span class="discord-timestamp">${discordDate}</span>
-             </div>
-             <div class="discord-body">${escapeHtml(m.body)}<span id="human_linktxt_${m.id}" class="discord-link">Verify clown_eroo</span></div>
-           </div>
-        </div>
-        <div class="discord-input-container">
-           <div class="discord-input-bar">
-             <div class="discord-plus-icon">+</div>
-             <div class="discord-input-text">Message @clowneroo</div>
-             <div class="discord-icons">
-               <span>🎁</span> <span>GIF</span> <span>😊</span>
-             </div>
-           </div>
-        </div>
-      </div>`;
-    
-    case "authority":
-      /* EXISTING AUTHORITY (OUTLOOK) */
-      return `
-      <div class="card outlook-card" role="article" aria-labelledby="t_${m.id}" style="max-width:800px; margin:0 auto;">
-        
-        <div class="outlook-header">
-           <div class="outlook-sender-info">
-             <div class="outlook-avatar-circle">MA</div>
-             <div class="outlook-sender-text">
-               <span class="outlook-name">Michelle S. Acomular</span>
-               <span class="outlook-to">To: You</span>
-             </div>
-           </div>
-           <div class="outlook-actions-area">
-             <div class="outlook-action-icons">
-               <span class="outlook-icon-item">☺</span>
-               <span class="outlook-icon-item">↩ Reply</span>
-               <span class="outlook-icon-item">⇇ Reply all</span>
-               <span class="outlook-icon-item">→ Forward</span>
-               <span class="outlook-icon-item">...</span>
-             </div>
-             <div class="outlook-date">${outlookDate}</div>
-           </div>
-        </div>
-
-        <div class="outlook-scroll-container">
-           <div class="outlook-body-text">
-             Dear <strong>Student of Far Eastern University</strong>,<br><br>
-             ${escapeHtml(m.body)}
-             <span id="human_linktxt_${m.id}" class="outlook-link">Netsuite Student</span>
-             <br><br>
-             We ask you kindly to send your full school record history and if you have questions to ask, reach out to the Far Eastern University IT department email.
-             <br><br>
-             <strong>Important:</strong> Kindly read and understand the guide thoroughly to ensure that you <strong>follow</strong> the procedure.
-             <br><br>
-             Thank you for your cooperation.
-           </div>
-
-           <div class="outlook-signature-stack">
-             Sincerely,<br>
-             Michelle S. Acomular<br>
-             IT Department<br>
-             Far Eastern University<br>
-             macomular@feu.edu.ph
-           </div>
-
-           <img src="${m.canvasLogo}" alt="Canvas" class="outlook-canvas-logo" />
-
-           <div class="outlook-footer-links">
-             <span>View Announcement on Dashboard</span> | <span>Update your notification settings</span>
-           </div>
-
-           <div class="outlook-disclaimer">
-             This email contains confidential information for the sole use of intended recipient/s. If you are not the intended recipient, please contact the sender, delete this email and maintain the confidentiality of what you may have read.
-           </div>
-        </div>
-
-        <div class="outlook-bottom-btns">
-          <div class="outlook-chip">↩ Reply</div>
-          <div class="outlook-chip">→ Forward</div>
-        </div>
-
-      </div>`;
-      
-    default:
-      return `<div class="card"><h3 class="title">${escapeHtml(m.title)}</h3><p>${escapeHtml(m.body)}</p><a id="human_cta_${m.id}" class="cta" target="_blank">Open</a></div>`;
-  }
+  // Select one AI message randomly
+  const pick = aiMessages[Math.floor(Math.random()*aiMessages.length)];
+  return { source: 'ai', message: pick };
 }
 
 /* ---------- Render AI messages (unchanged) ---------- */
@@ -771,7 +511,7 @@ function renderAI(m){
   const now = new Date();
   const dateStr = now.toLocaleDateString(undefined, { year:'numeric', month:'2-digit', day:'2-digit' });
   const timeStr = now.toLocaleTimeString(undefined, { hour:'2-digit', minute:'2-digit' }).toUpperCase();
-  // ... (AI rendering logic remains the same)
+  
   switch(m.type){
     case "curiosity":
       return `
@@ -857,7 +597,7 @@ const source = chosenWrap.source;
 const chosen = chosenWrap.message;
 
 let html = '';
-if (source === 'ai') html = renderAI(chosen); else html = renderHuman(chosen);
+if (source === 'ai') html = renderAI(chosen); 
 document.getElementById('wrap').innerHTML = html;
 
 /* ---------- Analytics: page_view & impression ---------- */
@@ -867,9 +607,6 @@ function safeGtag(name, params){
 if (source === 'ai'){
   safeGtag('ai_page_view', { message_id: chosen.id, message_type: chosen.type });
   safeGtag('ai_message_impression', { message_id: chosen.id, message_type: chosen.type });
-} else {
-  safeGtag('human_page_view', { message_id: chosen.id, message_type: chosen.type });
-  safeGtag('human_message_impression', { message_id: chosen.id, message_type: chosen.type });
 }
 
 /* ---------- Click registration (one click per visitor per message) ---------- */
@@ -878,7 +615,6 @@ function registerClick(prefix, id){
   if (clicked) return;
   clicked = true;
   if (prefix === 'ai') safeGtag('ai_link_click', { message_id: id, message_type: chosen.type });
-  else safeGtag('human_link_click', { message_id: id, message_type: chosen.type });
 }
 
 /* AI click handlers: two clickable elements (button + link text) */
@@ -887,23 +623,6 @@ if (source === 'ai') {
   const extra = document.getElementById(`ai_linktxt_${chosen.id}`);
   if (btn) btn.addEventListener('click', (e) => { registerClick('ai', chosen.id); window.open(chosen.link, '_blank', 'noopener'); });
   if (extra) extra.addEventListener('click', (e) => { registerClick('ai', chosen.id); window.open(chosen.link, '_blank', 'noopener'); });
-}
-
-/* HUMAN click handlers: one or multiple targets depending on message */
-if (source === 'human') {
-  /* Generic CTA */
-  const hbtn = document.getElementById(`human_cta_${chosen.id}`);
-  if (hbtn) hbtn.addEventListener('click', (e) => { registerClick('human', chosen.id); window.open(chosen.link, '_blank', 'noopener'); });
-
-  /* Special handlers for inbox urgency: the underlined text and "report abuse" area must register clicks */
-  const inboxLink = document.getElementById(`human_linktxt_${chosen.id}`);
-  if (inboxLink) inboxLink.addEventListener('click', (e) => { registerClick('human', chosen.id); window.open(chosen.link, '_blank', 'noopener'); });
-
-  /* Familiarity: upload button and input box interactions register as clicks */
-  const uploadBtn = document.getElementById(`upload_btn_${chosen.id}`);
-  if (uploadBtn) uploadBtn.addEventListener('click', (e) => { registerClick('human', chosen.id); window.open(chosen.link, '_blank', 'noopener'); });
-  const fakeTxt = document.getElementById(`fake_txt_${chosen.id}`);
-  if (fakeTxt) fakeTxt.addEventListener('focus', (e) => { registerClick('human', chosen.id); });
 }
 
 /* ---------- Scroll detection ---------- */
@@ -919,7 +638,6 @@ function maybeSendScroll(){
   if (percent >= threshold) {
     scrollSent = true;
     if (source === 'ai') safeGtag('ai_scroll', { message_id: chosen.id, message_type: chosen.type, scroll_percent: Math.round(percent) });
-    else safeGtag('human_scroll', { message_id: chosen.id, message_type: chosen.type, scroll_percent: Math.round(percent) });
   }
 }
 window.addEventListener('scroll', maybeSendScroll);
@@ -934,22 +652,14 @@ function startHeartbeat(){
     secondsOnPage++;
     if (secondsOnPage % 10 === 0) {
       if (source === 'ai') safeGtag('ai_heartbeat', { message_id: chosen.id, secs: secondsOnPage });
-      else safeGtag('human_heartbeat', { message_id: chosen.id, secs: secondsOnPage });
     }
   }, 1000);
 }
 startHeartbeat();
 
-/* Redirect user to link after 10 seconds for all message pages using FORM_LINK 
-setTimeout(() => {
-  window.location.href = FORM_LINK;
-}, 10000); --Disabled for now
-*/
-
 window.addEventListener('pagehide', () => {
   if (heartbeatTimer) clearInterval(heartbeatTimer);
   if (source === 'ai') safeGtag('ai_time_spent_on_page', { message_id: chosen.id, secs: secondsOnPage });
-  else safeGtag('human_time_spent_on_page', { message_id: chosen.id, secs: secondsOnPage });
 });
 
 /* safety: also clear heartbeat on unload */
@@ -963,4 +673,3 @@ document.addEventListener('click', (e) => {
 </script>
 </body>
 </html>
-
