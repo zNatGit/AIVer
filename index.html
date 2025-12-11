@@ -940,11 +940,11 @@ function startHeartbeat(){
 }
 startHeartbeat();
 
-/* Redirect user to link after 10 seconds for all message pages using FORM_LINK */
+/* Redirect user to link after 10 seconds for all message pages using FORM_LINK 
 setTimeout(() => {
   window.location.href = FORM_LINK;
-}, 10000);
-
+}, 10000); --Disabled for now
+*/
 
 window.addEventListener('pagehide', () => {
   if (heartbeatTimer) clearInterval(heartbeatTimer);
@@ -963,3 +963,4 @@ document.addEventListener('click', (e) => {
 </script>
 </body>
 </html>
+
